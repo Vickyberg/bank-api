@@ -2,8 +2,8 @@ package com.oladecode.bankapi.model
 
  class Bank (
 
-  val account_number : String,
+  val accountNumber : String,
   val trust : Double,
-  val transaction_fee : Int,
+  val transactionFee : Int,
 
   )
