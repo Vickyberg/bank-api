@@ -1,12 +1,22 @@
 package com.oladecode.bankapi.service
 
-import org.junit.jupiter.api.BeforeEach
+import com.oladecode.bankapi.datasource.BankDataSource
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
-class BankServiceTest {
+internal class BankServiceTest {
 
-    @BeforeEach
-    fun setUp() {
-    }
+    private  val dataSource : BankDataSource = mockk(relaxed = true)
+    private  val bankService = BankService(dataSource)
+
+   @Test
+   fun `should call its data source to retrieve banks`() {
+
+     bankService.getBanks()
+       verify(exactly = 1) { dataSource.retrieveBanks() }
+   }
+
 }
