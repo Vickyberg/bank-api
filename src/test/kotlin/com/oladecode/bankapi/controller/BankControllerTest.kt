@@ -51,7 +51,7 @@ internal class BankControllerTest @Autowired constructor(
         @Test
         fun `should return the bank with given account number`(){
             // given
-            val accountNumber = 1233
+            val accountNumber = "1233"
             //when/then
             mockMvc.get("$baseUrl/$accountNumber")
                 .andDo { print() }
@@ -163,7 +163,7 @@ internal class BankControllerTest @Autowired constructor(
         @Test
         fun `should update an existing bank `(){
             // given
-            val updatedBank = Bank("1233",1.0,1)
+            val updatedBank = Bank("1233",3.142,1)
             //when
             val performPatchRequest = mockMvc.patch(baseUrl)
             {
@@ -218,16 +218,35 @@ internal class BankControllerTest @Autowired constructor(
     inner class DeleteExistingBank{
         
         @Test
-        fun `should `(){
+        fun `should delete exiting bank with provide account number`(){
             // given
-            
-            //when
-            
-            //then
-            
+            val accountNumber  = "1233"
+            //when/then
+            mockMvc.delete("$baseUrl/$accountNumber")
+
+                .andDo { print() }
+                .andExpect {
+                    status { isNoContent() }
+                }
+            mockMvc.get("$baseUrl/$accountNumber")
+                .andExpect { status { isNotFound() } }
             
             }
-            
+
+        @Test
+        fun `should return NOT FOUND if no bank with given account number exists`(){
+
+            // given
+            val  invalidAccountNumber  = "does_not_exist"
+            //when/then
+
+            mockMvc.delete("$baseUrl/$invalidAccountNumber")
+                .andDo { print() }
+                .andExpect { status { isNotFound() } }
+
+
+            }
+
 
 
 
